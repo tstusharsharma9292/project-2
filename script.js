@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  // --- ADDED FOR YOUR COLLEGE PROJECT ---
+  alert("Welcome to my college project website!");
+  // --------------------------------------
+
   const modal = document.getElementById("location-modal");
   const openBtn = document.getElementById("change-location-btn");
   const closeBtn = document.getElementById("close-location");
@@ -129,15 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  languageModal.addEventListener("click", (e) => {
-
-    if (e.target === languageModal) {
-
-      languageModal.style.display = "none";
-
-    }
-
-  });
+  // Quick safety check: added 'if (languageModal)' to prevent errors if element isn't found
+  if (languageModal) {
+    languageModal.addEventListener("click", (e) => {
+      if (e.target === languageModal) {
+        languageModal.style.display = "none";
+      }
+    });
+  }
 
   document
     .querySelectorAll('input[name="lang"]')
@@ -152,7 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
           radio.value
         );
 
-        languageModal.style.display = "none";
+          if (languageModal) {
+            languageModal.style.display = "none";
+          }
 
       });
 
@@ -160,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const savedLang = localStorage.getItem("amazonLanguage");
 
-  if (savedLang) {
+  if (savedLang && languageLabel) {
 
     languageLabel.textContent = savedLang;
 
@@ -174,20 +179,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const track = document.querySelector(".carousel-track");
+  const nextBtn = document.querySelector(".next");
+  const prevBtn = document.querySelector(".prev");
 
-  document.querySelector(".next").addEventListener("click", () => {
-    track.scrollBy({
-      left: 800,
-      behavior: "smooth"
+  if (track && nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      track.scrollBy({
+        left: 800,
+        behavior: "smooth"
+      });
     });
-  });
+  }
 
-  document.querySelector(".prev").addEventListener("click", () => {
-    track.scrollBy({
-      left: -800,
-      behavior: "smooth"
+  if (track && prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      track.scrollBy({
+        left: -800,
+        behavior: "smooth"
+      });
     });
-  });
+  }
 
   document.querySelectorAll(".see-all-btn").forEach(button => {
 
@@ -196,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       const content = this.previousElementSibling;
+      if (!content) return;
 
       const isHidden =
         content.style.display === "none" ||
