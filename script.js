@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // --- ADDED FOR YOUR COLLEGE PROJECT ---
-  alert("Welcome to my college project website!");
-  // --------------------------------------
-
   const modal = document.getElementById("location-modal");
   const openBtn = document.getElementById("change-location-btn");
   const closeBtn = document.getElementById("close-location");
@@ -54,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentImage = 0;
 
   if (backdropImages.length > 0) {
-
     function rotateBackdrop() {
       backdropImages.forEach((img, index) => {
         img.style.opacity = index === currentImage ? "1" : "0";
@@ -67,20 +62,24 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(rotateBackdrop, 5000);
   }
 
+  // --- ADD TO CART SECTION WITH NEW ALERT ---
   let cartCount = 0;
-
   const cartBadge = document.getElementById("cart-count");
   const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
 
   addToCartButtons.forEach((button) => {
-
     button.addEventListener("click", () => {
-
       cartCount++;
 
       if (cartBadge) {
         cartBadge.textContent = cartCount;
       }
+
+      // 1. Log a backup to the console to make sure the click fired
+      console.log("Add to Cart clicked. Current items: " + cartCount);
+
+      // 2. Trigger the missing alert message!
+      alert("Success! Item has been added to your cart.");
 
       button.textContent = "Added ✓";
       button.style.background = "#73c2fb";
@@ -89,22 +88,17 @@ document.addEventListener("DOMContentLoaded", () => {
         button.textContent = "Add to Cart";
         button.style.background = "#ffd814";
       }, 1200);
-
     });
-
   });
 
   const searchInput = document.querySelector(".search-input");
   const cards = document.querySelectorAll(".shop-card");
 
   if (searchInput) {
-
     searchInput.addEventListener("input", () => {
-
       const term = searchInput.value.toLowerCase().trim();
 
       cards.forEach((card) => {
-
         const text = card.innerText.toLowerCase();
 
         if (text.includes(term)) {
@@ -112,11 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           card.style.display = "none";
         }
-
       });
-
     });
-
   }
 
   const languageBtn = document.getElementById("language-btn");
@@ -124,16 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const languageLabel = document.getElementById("selected-language");
 
   if (languageBtn) {
-
     languageBtn.addEventListener("click", () => {
-
       languageModal.style.display = "flex";
-
     });
-
   }
 
-  // Quick safety check: added 'if (languageModal)' to prevent errors if element isn't found
   if (languageModal) {
     languageModal.addEventListener("click", (e) => {
       if (e.target === languageModal) {
@@ -142,37 +128,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  document
-    .querySelectorAll('input[name="lang"]')
-    .forEach(radio => {
-
-      radio.addEventListener("change", () => {
-
-        languageLabel.textContent = radio.value;
-
-        localStorage.setItem(
-          "amazonLanguage",
-          radio.value
-        );
-
-          if (languageModal) {
-            languageModal.style.display = "none";
-          }
-
-      });
-
+  document.querySelectorAll('input[name="lang"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      languageLabel.textContent = radio.value;
+      localStorage.setItem("amazonLanguage", radio.value);
+      languageModal.style.display = "none";
     });
+  });
 
   const savedLang = localStorage.getItem("amazonLanguage");
 
-  if (savedLang && languageLabel) {
-
+  if (savedLang) {
     languageLabel.textContent = savedLang;
-
-    const selected = document.querySelector(
-      `input[value="${savedLang}"]`
-    );
-
+    const selected = document.querySelector(`input[value="${savedLang}"]`);
     if (selected) {
       selected.checked = true;
     }
@@ -182,104 +150,58 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.querySelector(".next");
   const prevBtn = document.querySelector(".prev");
 
-  if (track && nextBtn) {
+  if (track && nextBtn && prevBtn) {
     nextBtn.addEventListener("click", () => {
-      track.scrollBy({
-        left: 800,
-        behavior: "smooth"
-      });
+      track.scrollBy({ left: 800, behavior: "smooth" });
     });
-  }
 
-  if (track && prevBtn) {
     prevBtn.addEventListener("click", () => {
-      track.scrollBy({
-        left: -800,
-        behavior: "smooth"
-      });
+      track.scrollBy({ left: -800, behavior: "smooth" });
     });
   }
 
   document.querySelectorAll(".see-all-btn").forEach(button => {
-
     button.addEventListener("click", function (e) {
-
       e.preventDefault();
-
       const content = this.previousElementSibling;
-      if (!content) return;
 
-      const isHidden =
-        content.style.display === "none" ||
-        content.style.display === "";
+      const isHidden = content.style.display === "none" || content.style.display === "";
 
       if (isHidden) {
-
         content.style.display = "block";
-
-        this.innerHTML =
-          'See Less <i class="fa-solid fa-angle-up"></i>';
-
+        this.innerHTML = 'See Less <i class="fa-solid fa-angle-up"></i>';
       } else {
-
         content.style.display = "none";
-
-        this.innerHTML =
-          'See All <i class="fa-solid fa-angle-down"></i>';
-
+        this.innerHTML = 'See All <i class="fa-solid fa-angle-down"></i>';
       }
-
     });
-
   });
 
   const scrollTopBtn = document.getElementById("scroll-top-btn");
 
   if (scrollTopBtn) {
-
     scrollTopBtn.addEventListener("click", () => {
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-
   }
 
-  const copyright =
-    document.getElementById("copyright-notice");
+  const copyright = document.getElementById("copyright-notice");
 
   if (copyright) {
-
-    copyright.innerHTML =
-      `©️ 1996–${new Date().getFullYear()}, Amazon.com, Inc. or its affiliates`;
-
+    copyright.innerHTML = `©️ 1996–${new Date().getFullYear()}, Amazon.com, Inc. or its affiliates`;
   }
 
-  const dropdown =
-    document.querySelector(".search-dropdown");
-
-  const dropdownBox =
-    document.querySelector(".search-dropdown-box");
+  const dropdown = document.querySelector(".search-dropdown");
+  const dropdownBox = document.querySelector(".search-dropdown-box");
 
   if (dropdown && dropdownBox) {
-
-    const label =
-      document.createElement("span");
-
+    const label = document.createElement("span");
     label.textContent = dropdown.value;
-
-    dropdownBox.insertBefore(
-      label,
-      dropdownBox.firstChild
-    );
+    dropdownBox.insertBefore(label, dropdownBox.firstChild);
 
     dropdown.addEventListener("change", () => {
       label.textContent = dropdown.value;
     });
-
   }
 
 });
